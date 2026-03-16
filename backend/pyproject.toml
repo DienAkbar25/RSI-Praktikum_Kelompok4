@@ -1,18 +1,10 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "Dien",email = "akbardian64@gmail.com"}
-]
+description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 dependencies = [
+    "fastapi[standard]>=0.135.1",
+    "pydantic>=2.12.5",
 ]
-
-[tool.poetry]
-packages = [{include = "backend", from = "src"}]
-
-[build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
