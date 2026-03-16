@@ -6,13 +6,11 @@ def get_by_id(id, arr):
     if len(arr) <= 0:
         return False
 
-    if "id" not in arr[0]:
+    if not hasattr(arr[0], "id"):
         return False
 
-    for item in arr:
-        item_id = item["id"]
-
-        if id == item_id:
-            return item
+    for idx, item in enumerate(arr):
+        if id == item.id:
+            return idx
 
     return False
