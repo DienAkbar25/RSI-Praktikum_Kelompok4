@@ -15,4 +15,3 @@ products = [
     Product(id=4, name="Tepung", price=8000, stock=50),
     Product(id=5, name="Sabun", price=5000, stock=30),
 ]
-

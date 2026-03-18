@@ -1,36 +1,68 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException, status
 from src.schemas.products import Product
+from src.models.products import ProductUpdate, ProductAdd
 from src.schemas.products import products
-from src.models.products import Addproduct
-
+from src.utils.get_by_id import get_by_id
 
 
 router = APIRouter(prefix="/api/v1/products", tags=["products"])
 
+
 @router.get("/")
 async def get_all_product():
-    return {
-        "status" : "success",
-        "message" : "resturn all item",
-        "data" : products
-    }
+    return products
+
 
 @router.post("/")
-async def add_product(product : Addproduct):
+async def add_product(product: ProductAdd):
     new_id = max([p.id for p in products]) + 1
 
     new_product = Product(
-            id = new_id,
-            name = product.name,
-            price = product.price,
-            stock = product.stock
-
+        id=new_id, name=product.name, price=product.price, stock=product.stock
     )
-        
+
     products.append(new_product)
 
     return {
-        "status" : "success",
-        "message" : "added product",
-        "data" : new_product    
+        "status": "success",
+        "message": "product added successfully",
+        "data": new_product,
+    }
+
+
+@router.put("/{product_id}")
+async def update_product(product_id: int, product_new: ProductUpdate):
+    idx = get_by_id(product_id, products)
+
+    if idx is False:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Product with id {product_id} not found",
+        )
+
+    products[idx] = products[idx].model_copy(
+        update=product_new.model_dump(exclude_unset=True)
+    )
+
+    return {
+        "status": "success",
+        "message": "Item updated successfully",
+    }
+
+
+@router.delete("/{product_id}")
+async def delete_product(product_id: int):
+    idx = get_by_id(product_id, products)
+
+    if idx is False:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Product with id {product_id} not found",
+        )
+
+    products.pop(idx)
+
+    return {
+        "status": "success",
+        "message": "Item deleted successfully",
     }

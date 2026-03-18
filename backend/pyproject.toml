@@ -8,3 +8,6 @@ dependencies = [
     "fastapi[standard]>=0.135.1",
     "pydantic>=2.12.5",
 ]
+
+[tool.fastapi]
+entrypoint = "src.main:app"
