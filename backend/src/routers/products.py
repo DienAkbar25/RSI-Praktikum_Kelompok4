@@ -1,14 +1,13 @@
 from fastapi import APIRouter, HTTPException, status
-from src.schemas.products import Product
+from src.schemas.products import Product, products
 from src.models.products import ProductUpdate, ProductAdd
-from src.schemas.products import products
 from src.utils.get_by_id import get_by_id
 
 
 router = APIRouter(prefix="/api/v1/products", tags=["products"])
 
 
-@router.get("/")
+@router.get("/", response_model=list[Product])
 async def get_all_product():
     return products
 
@@ -30,7 +29,7 @@ async def add_product(product: ProductAdd):
     }
 
 
-@router.put("/{product_id}")
+@router.put("/{product_id}", response_model=Product)
 async def update_product(product_id: int, product_new: ProductUpdate):
     idx = get_by_id(product_id, products)
 
