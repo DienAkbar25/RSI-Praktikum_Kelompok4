@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
-from src.models.products import ProductUpdate
+from src.schemas.products import Product
+from src.models.products import ProductUpdate, ProductAdd
 from src.schemas.products import products
 from src.utils.get_by_id import get_by_id
 
@@ -7,10 +8,26 @@ from src.utils.get_by_id import get_by_id
 router = APIRouter(prefix="/api/v1/products", tags=["products"])
 
 
-# @router.get("/")
+@router.get("/")
+async def get_all_product():
+    return products
 
 
-# @router.post("/")
+@router.post("/")
+async def add_product(product: ProductAdd):
+    new_id = max([p.id for p in products]) + 1
+
+    new_product = Product(
+        id=new_id, name=product.name, price=product.price, stock=product.stock
+    )
+
+    products.append(new_product)
+
+    return {
+        "status": "success",
+        "message": "product added successfully",
+        "data": new_product,
+    }
 
 
 @router.put("/{product_id}")
@@ -30,7 +47,6 @@ async def update_product(product_id: int, product_new: ProductUpdate):
     return {
         "status": "success",
         "message": "Item updated successfully",
-        "database": products,  # NOTE: Hanya untuk lihat data, hapus kalau sudah ada GET endpoint
     }
 
 
@@ -49,5 +65,4 @@ async def delete_product(product_id: int):
     return {
         "status": "success",
         "message": "Item deleted successfully",
-        "database": products,  # NOTE: Hanya untuk lihat data, hapus kalau sudah ada GET endpoint
     }
