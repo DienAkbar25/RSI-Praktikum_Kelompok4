@@ -12,6 +12,19 @@ async def get_all_product():
     return products
 
 
+@router.get("/{product_id}", response_model=Product)
+async def get_product(product_id: int):
+    idx = get_by_id(product_id, products)
+
+    if idx is False:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Product with id {product_id} not found",
+        )
+
+    return products[idx]
+
+
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=Product)
 async def add_product(product: ProductAdd):
     new_id = max([p.id for p in products], default=0) + 1
