@@ -7,7 +7,7 @@ const anggotaKelompok = [
   { nama: 'Aulia Rahma Bidayah', nim: 'L0224003', foto: '/auliaa.jpg' },
   { nama: 'Prayuda Afifan Handoyo', nim: 'L0224008', foto: '/yuda.jpeg' },
   { nama: 'Dien Akmalin Rizqi Akbar', nim: 'L0224028', foto: '/dien.png' },
-  { nama: 'Gloria Dana Praisylia', nim: 'L0224043', foto: '/gloria.jpg' },
+  { nama: 'Gloria Dana Praisylia', nim: 'L0224043', foto: '/gloria.jpeg' },
 ];
 
 // ─── Efek suara klik ──────
