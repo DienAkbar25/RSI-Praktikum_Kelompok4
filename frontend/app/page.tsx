@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react';
 
 
 const anggotaKelompok = [
-  { nama: 'Aulia Rahma Bidayah', nim: 'L0224003', foto: '/aulia.jpg' },
-  { nama: 'Prayuda Afifan Handoyo', nim: 'L0224008', foto: '/yuda.jpg' },
-  { nama: 'Dien Akmalin Rizqi Akbar', nim: 'L0224028', foto: '/dien.jpg' },
-  { nama: 'Gloria Dana Praisylia', nim: 'L0224043', foto: '/gloria.jpg' },
+  { nama: 'Aulia Rahma Bidayah', nim: 'L0224003', foto: '/auliaa.jpg' },
+  { nama: 'Prayuda Afifan Handoyo', nim: 'L0224008', foto: '/yuda.jpeg' },
+  { nama: 'Dien Akmalin Rizqi Akbar', nim: 'L0224028', foto: '/dien.png' },
+  { nama: 'Gloria Dana Praisylia', nim: 'L0224043', foto: '/gloria.jpeg' },
 ];
 
 // ─── Efek suara klik ──────
@@ -150,17 +150,22 @@ export default function Home() {
         <div
           className="fixed inset-0 -z-20"
           style={{
-            background: 'linear-gradient(135deg, #F5E6DC 0%, #EEADC5 30%, #E6BEAE 60%, #E29C9C 90%)',
-          }}
+            background: 'linear-gradient(135deg, #ffffff, #f3f0ff, #e9d5ff)',          }}
         />
       )}
 
       {/* CENTER GLOW */}
       <div className="fixed inset-0 -z-10 pointer-events-none">
-        <div className="absolute w-[800px] h-[800px] bg-purple-500 opacity-10 blur-[200px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      <div
+        className="absolute w-[800px] h-[800px] blur-[200px]"
+        style={{
+          background: darkMode ? '#a855f7' : '#c4b5fd',
+          opacity: darkMode ? 0.1 : 0.15,
+        }}
+      />
       </div>
 
-      {/* STARS & METEORS — hanya dirender di client */}
+      {/* STARS & METEORS */}
       {mounted && darkMode && (
         <>
           <div className="fixed inset-0 -z-10">
@@ -208,7 +213,10 @@ export default function Home() {
 
       {/* HEADER */}
       <header className="p-6 relative z-10 flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-purple-300">
+        <h1
+          className="text-lg font-semibold"
+          style={{ color: darkMode ? '#c084fc' : '#5b21b6' }}
+        >
           RSI-Praktikum_Kelompok4
         </h1>
         <button
@@ -255,15 +263,23 @@ export default function Home() {
               </p>
               <div className="mt-8 flex justify-center gap-12">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-300">{countMembers}</div>
+                  <div
+                  className="text-3xl font-bold"
+                  style={{ color: darkMode ? '#c084fc' : '#6d28d9' }}
+                >{countMembers}</div>
                   <div className="text-xs mt-0.5" style={{ color: darkMode ? '#9ca3af' : lightSecondaryColor }}>
-                    Anggota
+                    People
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-300">{countGroup}</div>
-                  <div className="text-xs mt-0.5" style={{ color: darkMode ? '#9ca3af' : lightSecondaryColor }}>
-                    Kelompok
+                  <div
+                    className="text-3xl font-bold"
+                    style={{ color: darkMode ? '#c084fc' : '#6d28d9' }}
+                  >
+                    {countGroup}
+                  </div>
+                  <div className="text-xs mt-0.5" style={{ color: darkMode ? '#9ca3af' : '#6b21a8' }}>
+                    Vision
                   </div>
                 </div>
               </div>
@@ -283,7 +299,10 @@ export default function Home() {
               transition={{ duration: 0.7 }}
               className="w-full max-w-6xl mx-auto"
             >
-              <h2 className="text-3xl font-bold text-center mb-12 text-purple-300">
+              <h2
+                className="text-3xl font-bold text-center mb-12"
+                style={{ color: darkMode ? '#c084fc' : lightTextColor }}
+              >
                 Anggota Kelompok
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -296,9 +315,11 @@ export default function Home() {
                     whileHover={{ scale: 1.08, y: -10 }}
                     onClick={() => handleCardClick(m)}
                     className={`p-6 rounded-xl backdrop-blur-xl border text-center transition cursor-pointer
-                      ${i % 2 === 0
-                        ? 'bg-gradient-to-br from-purple-500/10 to-transparent border-purple-400/20'
-                        : 'bg-gradient-to-br from-white/10 to-transparent border-white/10'}
+                    ${darkMode
+                    ? i % 2 === 0
+                      ? 'bg-gradient-to-br from-purple-500/10 to-transparent border-purple-400/20'
+                      : 'bg-gradient-to-br from-white/10 to-transparent border-white/10'
+                    : 'bg-white border border-purple-200 shadow-md'}
                       hover:shadow-2xl hover:shadow-purple-500/20`}
                   >
                     <motion.img
@@ -318,7 +339,7 @@ export default function Home() {
                     </p>
                     <p
                       className="text-[11px] mt-2"
-                      style={{ color: darkMode ? '#c084fc80' : `${lightPurpleAccent}80` }}
+                      style={{ color: darkMode ? '#c084fc80' : '#7c3aed' }}
                     >
                       Klik untuk detail →
                     </p>
@@ -339,7 +360,13 @@ export default function Home() {
         </AnimatePresence>
       </main>
 
-      <footer className="text-center py-6 text-gray-400 border-t border-white/10 relative z-10">
+      <footer
+        className="text-center py-6 border-t relative z-10"
+        style={{
+          color: darkMode ? '#9ca3af' : '#5b21b6',
+          borderColor: darkMode ? 'rgba(255,255,255,0.1)' : '#c4b5fd',
+        }}
+      >
         RSI-Praktikum_Kelompok4
       </footer>
 
